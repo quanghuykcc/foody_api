@@ -118,7 +118,7 @@ class Restaurant extends Model
     ];
 
     public function comments() {
-        return $this->hasMany('App\Models\Comment','restaurant_id', 'id')->with('commenter'); 
+        return $this->hasMany('App\Models\Comment','restaurant_id', 'id')->orderBy('updated_at', 'desc')->limit(2)->with('commenter'); 
     }
 
     public function category() {

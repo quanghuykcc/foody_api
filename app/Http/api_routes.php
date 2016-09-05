@@ -21,3 +21,8 @@ Route::resource('categories', 'CategoryAPIController');
 
 Route::controller('authenticate', 'AuthenticateAPIController');
 
+
+
+
+
+Route::resource('favoriteRestaurants', 'FavoriteRestaurantAPIController');
