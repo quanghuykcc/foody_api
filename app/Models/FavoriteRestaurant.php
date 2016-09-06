@@ -72,7 +72,7 @@ class FavoriteRestaurant extends Model
      * @var array
      */
     public static $rules = [
-        'user_id' => 'required',
+        'user_id' => 'required|unique_with:favorite_restaurants, restaurant_id',
         'restaurant_id' => 'required'
     ];
 }
