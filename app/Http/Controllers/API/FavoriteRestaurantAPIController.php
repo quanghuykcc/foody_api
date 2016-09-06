@@ -67,6 +67,7 @@ class FavoriteRestaurantAPIController extends InfyOmBaseController
         $this->favoriteRestaurantRepository->pushCriteria(new RequestCriteria($request));
         $this->favoriteRestaurantRepository->pushCriteria(new LimitOffsetCriteria($request));
         $this->favoriteRestaurantRepository->pushCriteria(new UserIdCriteria($request));
+        $this->favoriteRestaurantRepository->pushCriteria(new LastSyncTimestampCriteria($request));
 
         $favoriteRestaurants = $this->favoriteRestaurantRepository->all();
 
