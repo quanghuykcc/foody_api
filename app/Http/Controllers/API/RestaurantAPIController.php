@@ -13,6 +13,7 @@ use InfyOm\Generator\Utils\ResponseUtil;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use Carbon\Carbon;
+use App\Http\Criteria\FavoriteUserIdCriteria;
 
 /**
  * Class RestaurantController
@@ -66,7 +67,8 @@ class RestaurantAPIController extends InfyOmBaseController
         $this->restaurantRepository->pushCriteria(new RequestCriteria($request));
         $this->restaurantRepository->pushCriteria(new LimitOffsetCriteria($request));
         $this->restaurantRepository->pushCriteria(new CategoryIdCriteria($request));
-        $this->restaurantRepository->pushCriteria(new LastSyncTimestampCriteria($request));
+        $this->restaurantRepository->pushCriteria(new LastSyncTimestampCriteria($request));   
+        $this->restaurantRepository->pushCriteria(new FavoriteUserIdCriteria($request));
 
         $restaurants = $this->restaurantRepository->with('category')->with('comments')->all();
 

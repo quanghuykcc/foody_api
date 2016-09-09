@@ -124,4 +124,8 @@ class Restaurant extends Model
     public function category() {
         return $this->belongsTo('App\Models\Category', 'category_id', 'id')->select(array('id', 'name', 'image'));
     }
+
+    public function favorite() {
+        return $this->hasMany('App\Models\FavoriteRestaurant', 'restaurant_id', 'id');
+    }
 }
