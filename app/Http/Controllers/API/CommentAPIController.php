@@ -8,7 +8,7 @@ use App\Models\Comment;
 use App\Repositories\CommentRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController as InfyOmBaseController;
-use InfyOm\Generator\Criteria\LimitOffsetCriteria;
+use App\Http\Criteria\LimitOffsetCriteria;
 use InfyOm\Generator\Utils\ResponseUtil;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;

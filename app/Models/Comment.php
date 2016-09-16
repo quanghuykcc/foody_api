@@ -66,7 +66,6 @@ class Comment extends Model
     public $fillable = [
         'commenter_id',
         'restaurant_id',
-        'title',
         'content'
     ];
 
@@ -79,7 +78,6 @@ class Comment extends Model
     protected $casts = [
         'commenter_id' => 'integer',
         'restaurant_id' => 'integer',
-        'title' => 'string',
         'content' => 'string'
     ];
 
@@ -91,7 +89,6 @@ class Comment extends Model
     public static $rules = [
         'commenter_id' => 'required|exists:users,id',
         'restaurant_id' => 'required|exists:restaurants,id',
-        'title' => 'required|max:100',
         'content' => 'required'
     ];
 
