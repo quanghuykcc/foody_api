@@ -14,6 +14,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\User;
+use Illuminate\Support\Facades\Log;
 use Validator;
 
 class AuthenticateAPIController extends InfyOmBaseController
@@ -21,26 +22,40 @@ class AuthenticateAPIController extends InfyOmBaseController
 
 	public function postSignIn(Request $request) {
 
-			$credentials = $request->only('email', 'password');
+		$credentials = $request->only('email', 'password');
 
-	        try {
-	            // verify the credentials and create a token for the user
-	            if (! $token = JWTAuth::attempt($credentials)) {
-	            	return Response::json(ResponseUtil::makeError('invalid_credentials'));
-	            }
-	        } catch (JWTException $e) {
-	            // something went wrong
-	        	return Response::json(ResponseUtil::makeError('could_not_create_token'));
-	        }
+        try {
+            // verify the credentials and create a token for the user
+            if (! $token = JWTAuth::attempt($credentials)) {
+            	return Response::json(ResponseUtil::makeError('invalid_credentials'));
+            }
+        } catch (JWTException $e) {
+            // something went wrong
+        	return Response::json(ResponseUtil::makeError('could_not_create_token'));
+        }
 
-	        $loggedInUser = JWTAuth::toUser($token);
+        $loggedInUser = JWTAuth::toUser($token);
 
 
-	        $arrLoggedInUser = $loggedInUser->toArray();
-	        $arrLoggedInUser['remember_token'] = $token;
+        $arrLoggedInUser = $loggedInUser->toArray();
+        $arrLoggedInUser['remember_token'] = $token;
 
-	        // if no errors are encountered we can return a JWT
-	        return $this->sendResponse($arrLoggedInUser, 'Logged in successfully');
+        // if no errors are encountered we can return a JWT
+        return $this->sendResponse($arrLoggedInUser, 'Logged in successfully');
+	}
+
+	public function postReSignIn(Request $request) {
+
+		$remember_token = $request->input('remember_token');
+		try {
+            $loggedInUser = JWTAuth::toUser($remember_token); 
+            $arrLoggedInUser = $loggedInUser->toArray();
+    		$arrLoggedInUser['remember_token'] = $remember_token;
+    		return $this->sendResponse($arrLoggedInUser, 'Logged in successfully');           
+        } catch (\Exception $e) {
+	        return Response::json(ResponseUtil::makeError('Token is invalid'));
+	    } 
+
 	}
 
 	public function postSignUp(Request $request) {
